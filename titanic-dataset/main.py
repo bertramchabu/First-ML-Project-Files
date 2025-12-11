@@ -1,6 +1,6 @@
 import pandas as pd
-# import numpy as np
-
+import numpy as np
+import matplotlib.pyplot as plt
 # create a new dataframe 
 df = pd.read_csv('Titanic-Dataset.csv')
 # information about our dataset
@@ -37,3 +37,30 @@ df1 = df.drop(columns=['Name', 'Ticket', 'Cabin'])
 df1.dropna(subset=['Embarked'], inplace=True)
 df1['Age'].fillna(df1['Age'].mean(), inplace=True)
 print(df1)
+
+# detect outliers with Box Plot
+
+plt.boxplot(df1['Age'], vert=False)
+plt.ylabel('Variable')
+plt.xlabel('Age')
+plt.title('Box Plot')
+plt.show()
+
+# calculate Outlier Boundaries and REmove them
+mean = df1['Age'].mean()
+std= df1['Age'].std()
+
+lower_bound = mean -2 * std
+upper_bound = mean + 2 * std
+
+df2 = df1[(df1['Age']>= lower_bound) & (df1['Age'] <= upper_bound)]
+
+print(df2)
+
+plt.boxplot(df2['Age'], vert=False)
+plt.ylabel('Variable')
+plt.xlabel('Age')
+plt.title('Box Plot')
+plt.show()
+
+# Impute Missing Data Again
