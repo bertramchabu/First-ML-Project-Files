@@ -40,13 +40,14 @@ print(df1)
 
 # detect outliers with Box Plot
 
-plt.boxplot(df1['Age'], vert=False)
-plt.ylabel('Variable')
-plt.xlabel('Age')
-plt.title('Box Plot')
-plt.show()
+# plt.boxplot(df1['Age'], vert=False)
+# plt.ylabel('Variable')
+# plt.xlabel('Age')
+# plt.title('Box Plot')
+# plt.show()
 
 # calculate Outlier Boundaries and REmove them
+print("Outlier Boundaries and REmove them")
 mean = df1['Age'].mean()
 std= df1['Age'].std()
 
@@ -57,10 +58,30 @@ df2 = df1[(df1['Age']>= lower_bound) & (df1['Age'] <= upper_bound)]
 
 print(df2)
 
-plt.boxplot(df2['Age'], vert=False)
-plt.ylabel('Variable')
-plt.xlabel('Age')
-plt.title('Box Plot')
-plt.show()
+# plt.boxplot(df2['Age'], vert=False)
+# plt.ylabel('Variable')
+# plt.xlabel('Age')
+# plt.title('Box Plot')
+# plt.show()
 
 # Impute Missing Data Again
+print("Impute Missing Data Again")
+df3 = df2.fillna(df2['Age'].mean())
+df3.isnull().sum()
+print(df3)
+
+mean = df3['Age'].mean()
+std = df3['Age'].std()
+
+lower_bound = mean - 2 * std
+upper_bound = mean + 2 * std
+
+print('Lower Bound :', lower_bound)
+print('Upper Bound :', upper_bound)
+
+df4 = df3[(df3['Age'] >= lower_bound) & (df3['Age'] <= upper_bound)]
+print(df4)
+print("Data validation")
+X = df3[['Pclass','Sex','Age', 'SibSp','Parch','Fare','Embarked']]
+Y = df3['Survived']
+
